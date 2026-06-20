@@ -1,8 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 function UserLogin() {
-    let [empDetails,setEmpDetails]=useState([])
-    let [seekDetails,setSeekDetails]=useState([])
     let [check,setCheck]=useState("")
     let navigate=useNavigate()
     let [formData,setFormData]=useState({
@@ -21,80 +19,78 @@ function UserLogin() {
     }   
     
     const login=()=>{
-        let flog=false
-        if(!flog){
-            for(let i=0;i<Math.max(empDetails.length);i++){
-                if(formData.email===empDetails[i].Email){
-                   flog=true
-                    if(formData.password!==empDetails[i].Password){
-                        alert("incorrect Password")
-                        return
+        Promise.all([
+            fetch("https://jobvacancy-jsus.onrender.com/EmployerDetails", {
+                headers: { 'x-login-request': 'true' }
+            }).then(res=>res.json()),
+            fetch("https://jobvacancy-jsus.onrender.com/JobSeekerDetails", {
+                headers: { 'x-login-request': 'true' }
+            }).then(res=>res.json())
+        ])
+        .then(([empDetails, seekDetails]) => {
+            let flog=false
+            if(!flog){
+                for(let i=0;i<Math.max(empDetails.length);i++){
+                    if(formData.email===empDetails[i].Email){
+                       flog=true
+                        if(formData.password!==empDetails[i].Password){
+                            alert("incorrect Password")
+                            return
+                        }
+                        if(formData.role!==empDetails[i].role){
+                            alert("Please select correct role")
+                            return
+                        }
+                        if(check===""){
+                            alert("Please accept the terms and conditions")
+                            return
+                        }
+                        alert("login successfully")
+                        const userSession = {
+                            id: empDetails[i].id,
+                            role: empDetails[i].role,
+                            email: empDetails[i].Email,
+                            name: empDetails[i].ContactPerson
+                        }
+                        sessionStorage.setItem("user", JSON.stringify(userSession))
+                        navigate("/employer")
                     }
-                    if(formData.role!==empDetails[i].role){
-                        alert("Please select correct role")
-                        return
-                    }
-                    if(check===""){
-                        alert("Please accept the terms and conditions")
-                        return
-                    }
-                    alert("login successfully")
-                    const userSession = {
-                        id: empDetails[i].id,
-                        role: empDetails[i].role,
-                        email: empDetails[i].Email,
-                        name: empDetails[i].ContactPerson
-                    }
-                    sessionStorage.setItem("user", JSON.stringify(userSession))
-                    navigate("/employer")
                 }
             }
-        }
-        if(!flog){
-            for(let i=0;i<Math.max(seekDetails.length);i++){
-                if(formData.email===seekDetails[i].email){
-                   flog=true
-                    if(formData.password!==seekDetails[i].password){
-                        alert("incorrect Password")
-                        return
+            if(!flog){
+                for(let i=0;i<Math.max(seekDetails.length);i++){
+                    if(formData.email===seekDetails[i].email){
+                       flog=true
+                        if(formData.password!==seekDetails[i].password){
+                            alert("incorrect Password")
+                            return
+                        }
+                        if(formData.role!==seekDetails[i].role){
+                            alert("Please select correct role")
+                            return
+                        }
+                        if(check===""){
+                            alert("Please accept the terms and conditions")
+                            return
+                        }
+                        alert("login successfully")
+                        const userSession = {
+                            id: seekDetails[i].id,
+                            role: seekDetails[i].role,
+                            email: seekDetails[i].email,
+                            name: seekDetails[i].fullName
+                        }
+                        sessionStorage.setItem("user", JSON.stringify(userSession))
+                        navigate("/jobSeeker")
                     }
-                    if(formData.role!==seekDetails[i].role){
-                        alert("Please select correct role")
-                        return
-                    }
-                    if(check===""){
-                        alert("Please accept the terms and conditions")
-                        return
-                    }
-                    alert("login successfully")
-                    const userSession = {
-                        id: seekDetails[i].id,
-                        role: seekDetails[i].role,
-                        email: seekDetails[i].email,
-                        name: seekDetails[i].fullName
-                    }
-                    sessionStorage.setItem("user", JSON.stringify(userSession))
-                    navigate("/jobSeeker")
                 }
             }
-        }
-        if(!flog){
-            alert("Email not registered")
-        }
-       
+            if(!flog){
+                alert("Email not registered")
+            }
+        })
+        .catch(err=>console.log(err));
     }
-
-    useEffect(()=>{
-        fetch("https://jobvacancy-jsus.onrender.com/EmployerDetails")
-        .then(res=>res.json())
-        .then(data=>setEmpDetails(data))
-        .catch(err=>console.log(err));
-
-        fetch("https://jobvacancy-jsus.onrender.com/JobSeekerDetails")
-        .then(res=>res.json())
-        .then(data=>setSeekDetails(data))
-        .catch(err=>console.log(err));
-    },[])
 
 
     return(

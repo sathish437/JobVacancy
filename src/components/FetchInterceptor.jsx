@@ -3,26 +3,42 @@ import React, { useState, useEffect, useRef } from 'react';
 let globalSetActiveCount = null;
 let globalSetIsSlow = null;
 let globalSetError = null;
-let globalSetHasCompletedFirstFetch = null;
+let globalSetIsLoginLoading = null;
 
 export default function FetchInterceptor({ children }) {
   const [activeCount, setActiveCount] = useState(0);
   const [isSlow, setIsSlow] = useState(false);
   const [error, setError] = useState(null);
-  const [hasCompletedFirstFetch, setHasCompletedFirstFetch] = useState(false);
+  const [isLoginLoading, setIsLoginLoading] = useState(false);
 
   const activeCountRef = useRef(0);
   const slowTimerRef = useRef(null);
+  const loginRequestsActiveRef = useRef(0);
 
   useEffect(() => {
     globalSetActiveCount = setActiveCount;
     globalSetIsSlow = setIsSlow;
     globalSetError = setError;
-    globalSetHasCompletedFirstFetch = setHasCompletedFirstFetch;
+    globalSetIsLoginLoading = setIsLoginLoading;
 
     const originalFetch = window.fetch;
 
     window.fetch = async (...args) => {
+      const init = args[1];
+      let isLogin = false;
+      if (init && init.headers) {
+        if (typeof init.headers.get === 'function') {
+          isLogin = init.headers.get('x-login-request') === 'true';
+        } else {
+          isLogin = init.headers['x-login-request'] === 'true' || init.headers['X-Login-Request'] === 'true';
+        }
+      }
+
+      if (isLogin) {
+        loginRequestsActiveRef.current += 1;
+        if (globalSetIsLoginLoading) globalSetIsLoginLoading(true);
+      }
+
       // Increment active request count
       activeCountRef.current += 1;
       if (globalSetActiveCount) globalSetActiveCount(activeCountRef.current);
@@ -55,8 +71,11 @@ export default function FetchInterceptor({ children }) {
         }
         throw err; // Re-throw so original caller handles it
       } finally {
-        if (globalSetHasCompletedFirstFetch) {
-          globalSetHasCompletedFirstFetch(true);
+        if (isLogin) {
+          loginRequestsActiveRef.current -= 1;
+          if (loginRequestsActiveRef.current === 0) {
+            if (globalSetIsLoginLoading) globalSetIsLoginLoading(false);
+          }
         }
 
         activeCountRef.current -= 1;
@@ -92,7 +111,7 @@ export default function FetchInterceptor({ children }) {
       {children}
 
       {/* Loading Overlay */}
-      {!hasCompletedFirstFetch && !error && (
+      {isLoginLoading && !error && (
         <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-slate-900/60 backdrop-blur-md transition-all duration-300">
           <div className="flex flex-col items-center p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl max-w-sm w-full mx-4 text-center">
             {/* Elegant Spinning Indicator */}
