@@ -1,0 +1,109 @@
+{
+  "JobDetails": [
+    {
+      "id": "1",
+      "JobTitle": "Senior React Developer",
+      "CompanyName": "TechCorp Solutions",
+      "Location": "San Francisco, CA (Hybrid)",
+      "SalaryRange": "$120,000 - $140,000",
+      "ExperienceRequired": "3 - 5",
+      "SkillsRequired": "React, JavaScript, TailwindCSS, TypeScript",
+      "JobType": "Full-Time",
+      "JobDescription": "We are looking for a Senior React Developer to join our frontend team. You will lead the design and development of user-friendly interfaces for our main products.",
+      "postedBy": "1"
+    },
+    {
+      "id": "2",
+      "JobTitle": "Backend Node.js Engineer",
+      "CompanyName": "InnovateSoft",
+      "Location": "Remote",
+      "SalaryRange": "$110,000 - $130,000",
+      "ExperienceRequired": "2 - 4",
+      "SkillsRequired": "Node.js, Express, MongoDB, REST APIs",
+      "JobType": "Full-Time",
+      "JobDescription": "InnovateSoft is seeking a Backend Engineer skilled in Node.js to scale our cloud architecture and build robust RESTful microservices.",
+      "postedBy": "2"
+    },
+    {
+      "id": "3",
+      "JobTitle": "Frontend Developer Intern",
+      "CompanyName": "TechCorp Solutions",
+      "Location": "New York, NY",
+      "SalaryRange": "$25 - $35 / hour",
+      "ExperienceRequired": "0 - 1",
+      "SkillsRequired": "HTML, CSS, JavaScript, React basics",
+      "JobType": "Internship",
+      "JobDescription": "Gain hands-on experience working alongside senior engineers to implement new features using modern web technologies.",
+      "postedBy": "1"
+    }
+  ],
+  "AppliedJobs": [
+    {
+      "id": "1",
+      "JobTitle": "Senior React Developer",
+      "CompanyName": "TechCorp Solutions",
+      "Location": "San Francisco, CA (Hybrid)",
+      "SalaryRange": "$120,000 - $140,000",
+      "ExperienceRequired": "3 - 5",
+      "SkillsRequired": "React, JavaScript, TailwindCSS, TypeScript",
+      "JobType": "Full-Time",
+      "JobDescription": "We are looking for a Senior React Developer to join our frontend team. You will lead the design and development of user-friendly interfaces for our main products.",
+      "postedBy": "1",
+      "jobSeekerId": "1",
+      "jobSeekerEmail": "john.doe@example.com",
+      "jobSeekerName": "John Doe",
+      "appliedDate": "2026-06-18T10:00:00.000Z",
+      "status": "Shortlisted"
+    }
+  ],
+  "EmployerDetails": [
+    {
+      "id": "1",
+      "role": "Employer",
+      "CompanyName": "TechCorp Solutions",
+      "ContactPerson": "Alice Johnson",
+      "Email": "employer@gmail.com",
+      "Password": "password123",
+      "ConfirmPassword": "password123"
+    },
+    {
+      "id": "2",
+      "role": "Employer",
+      "CompanyName": "InnovateSoft",
+      "ContactPerson": "Bob Smith",
+      "Email": "beni@gmail.com",
+      "Password": "password123",
+      "ConfirmPassword": "password123"
+    }
+  ],
+  "JobSeekerDetails": [
+    {
+      "id": "1",
+      "role": "JobSeeker",
+      "fullName": "John Doe",
+      "email": "john.doe@gmail.com",
+      "phone": "555-0199",
+      "location": "San Francisco, CA",
+      "password": "password123",
+      "confirmPassword": "password123",
+      "skills": "React, JavaScript, HTML, CSS",
+      "experience": "4",
+      "education": "Bachelor of Science in Computer Science",
+      "resume": "C:\\fakepath\\john_doe_resume.pdf"
+    },
+    {
+      "id": "2",
+      "role": "JobSeeker",
+      "fullName": "Jane Smith",
+      "email": "ben@gmail.com",
+      "phone": "555-0233",
+      "location": "Boston, MA",
+      "password": "password123",
+      "confirmPassword": "password123",
+      "skills": "Node.js, Express, JavaScript, MongoDB",
+      "experience": "3",
+      "education": "Master of Science in Software Engineering",
+      "resume": "C:\\fakepath\\jane_smith_resume.pdf"
+    }
+  ]
+}
