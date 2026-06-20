@@ -4,12 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --host",
-    "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview",
-    "server": "json-server --watch postJob.json --port 3000"
-  },
+  "dev": "vite",
+  "build": "vite build",
+  "preview": "vite preview",
+  "start": "vite --host 0.0.0.0 --port $PORT"
+},
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
     "json-server": "^0.17.4",
