@@ -4,6 +4,7 @@ export default function FetchInterceptor({ children }) {
   const [activeCount, setActiveCount] = useState(0);
   const [isSlow, setIsSlow] = useState(false);
   const [error, setError] = useState(null);
+  const [hasCompletedFirstFetch, setHasCompletedFirstFetch] = useState(false);
 
   const activeCountRef = useRef(0);
   const slowTimerRef = useRef(null);
@@ -34,6 +35,7 @@ export default function FetchInterceptor({ children }) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
+        setHasCompletedFirstFetch(true);
         return response;
       } catch (err) {
         // Avoid setting error for aborted requests if any
@@ -75,7 +77,7 @@ export default function FetchInterceptor({ children }) {
       {children}
 
       {/* Loading Overlay */}
-      {activeCount > 0 && !error && (
+      {!hasCompletedFirstFetch && !error && (
         <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-slate-900/60 backdrop-blur-md transition-all duration-300">
           <div className="flex flex-col items-center p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl max-w-sm w-full mx-4 text-center">
             {/* Elegant Spinning Indicator */}
