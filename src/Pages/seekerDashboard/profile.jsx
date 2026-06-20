@@ -9,7 +9,7 @@ function Profile() {
 
         const userData=JSON.parse(user)
         
-        fetch("http://localhost:3000/JobSeekerDetails")
+        fetch("https://jobvacancy-jsus.onrender.com/JobSeekerDetails")
         .then(res => res.json())
         .then(data => {
             const profile=data.find(user => user.email === userData.email)

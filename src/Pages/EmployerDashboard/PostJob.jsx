@@ -13,7 +13,7 @@ function PostJob(){
     let [postedBy,setpostedBy]=useState("")
     
     useEffect(()=>{
-        fetch("http://localhost:3000/JobDetails")
+        fetch("https://jobvacancy-jsus.onrender.com/JobDetails")
         .then(res => res.json())
         .then(data => setpostedJobTitle(data))
         .catch(err => console.log(err))
@@ -39,7 +39,7 @@ function PostJob(){
             postedBy:postedBy
         }
 
-        fetch("http://localhost:3000/JobDetails",{
+        fetch("https://jobvacancy-jsus.onrender.com/JobDetails",{
             method:"POST",
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify(allDetails)
@@ -55,7 +55,7 @@ function PostJob(){
             setskillsRequired("")
             setjobType("")
             setjobDescription("")
-            fetch("http://localhost:3000/JobDetails")
+            fetch("https://jobvacancy-jsus.onrender.com/JobDetails")
             .then(res => res.json())
             .then(data => setpostedJobTitle(data))
             .catch(err => {})

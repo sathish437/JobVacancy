@@ -10,9 +10,9 @@ function Applicant(){
         const userData=JSON.parse(user)
 
         Promise.all([
-            fetch("http://localhost:3000/JobDetails").then(res=>res.json()),
-            fetch("http://localhost:3000/AppliedJobs").then(res=>res.json()),
-            fetch("http://localhost:3000/JobSeekerDetails").then(res=>res.json())
+            fetch("https://jobvacancy-jsus.onrender.com/JobDetails").then(res=>res.json()),
+            fetch("https://jobvacancy-jsus.onrender.com/AppliedJobs").then(res=>res.json()),
+            fetch("https://jobvacancy-jsus.onrender.com/JobSeekerDetails").then(res=>res.json())
         ])
         .then(([jobs,appliedJobs,seekers])=>{
             const employerJobs=jobs.filter(job=>job.postedBy===userData.id)
@@ -30,7 +30,7 @@ function Applicant(){
     },[])
 
     const updateStatus=(applicationId,newStatus)=>{
-        fetch(`http://localhost:3000/AppliedJobs/${applicationId}`,{
+        fetch(`https://jobvacancy-jsus.onrender.com/AppliedJobs/${applicationId}`,{
             method:"PATCH",
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify({status:newStatus})

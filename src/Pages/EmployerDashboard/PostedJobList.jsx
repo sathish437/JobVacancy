@@ -8,7 +8,7 @@ function PostedJobList(){
     const [editForm,setEditForm]=useState({})
     const navigate=useNavigate()
     useEffect(()=>{
-        fetch("http://localhost:3000/JobDetails")
+        fetch("https://jobvacancy-jsus.onrender.com/JobDetails")
         .then(res => res.json())
         .then(data => {
             setJobData(data)
@@ -23,7 +23,7 @@ function PostedJobList(){
     },[])
 
     const dele=(id)=>{
-        fetch(`http://localhost:3000/JobDetails/${id}`,{
+        fetch(`https://jobvacancy-jsus.onrender.com/JobDetails/${id}`,{
             method:"DELETE"
         })
         .then(() => {
@@ -40,7 +40,7 @@ function PostedJobList(){
 
     const handleSaveEdit=(e)=>{
         e.preventDefault()
-        fetch(`http://localhost:3000/JobDetails/${editingId}`,{
+        fetch(`https://jobvacancy-jsus.onrender.com/JobDetails/${editingId}`,{
             method:"PATCH",
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify(editForm)
@@ -49,7 +49,7 @@ function PostedJobList(){
         .then(data=>{
             setEditingId(null)
             setEditForm({})
-            fetch("http://localhost:3000/JobDetails")
+            fetch("https://jobvacancy-jsus.onrender.com/JobDetails")
             .then(res => res.json())
             .then(data => {
                 setJobData(data)

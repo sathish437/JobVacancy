@@ -8,7 +8,7 @@ function AppliedJobs(){
 
             const userData=JSON.parse(user)
             
-            fetch("http://localhost:3000/AppliedJobs")
+            fetch("https://jobvacancy-jsus.onrender.com/AppliedJobs")
             .then(res=>res.json())
             .then(data=>{
                 const userApplications=data.filter(app=>app.jobSeekerEmail===userData.email)
@@ -18,7 +18,7 @@ function AppliedJobs(){
         }, [])
 
         const del=(id)=>{
-          fetch(`http://localhost:3000/AppliedJobs/${id}`,{
+          fetch(`https://jobvacancy-jsus.onrender.com/AppliedJobs/${id}`,{
             method:"DELETE"
           })
           .then(res=>res.json())
@@ -26,7 +26,7 @@ function AppliedJobs(){
             const user=sessionStorage.getItem("user")
             if(user){
                 const userData=JSON.parse(user)
-                fetch("http://localhost:3000/AppliedJobs")
+                fetch("https://jobvacancy-jsus.onrender.com/AppliedJobs")
                 .then(res=>res.json())
                 .then(data=>{
                     const userApplications=data.filter(app=>app.jobSeekerEmail===userData.email)

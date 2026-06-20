@@ -3,12 +3,12 @@ function RequiredJobs() {
     const [requiredJobs,setRequiredJobs]=useState([])
     const [applied, setApplied] = useState([]);
     useEffect(()=>{
-      fetch("http://localhost:3000/JobDetails")
+      fetch("https://jobvacancy-jsus.onrender.com/JobDetails")
       .then(res=>res.json())
       .then(data=>setRequiredJobs(data))
       .catch(err=>console.log(err))
 
-      fetch("http://localhost:3000/AppliedJobs")
+      fetch("https://jobvacancy-jsus.onrender.com/AppliedJobs")
       .then(res=>res.json())
       .then(data=>{
         const ids=data.map(job=>job.id)
@@ -33,7 +33,7 @@ function RequiredJobs() {
         status:"Applied"
       }
 
-      fetch("http://localhost:3000/AppliedJobs",{
+      fetch("https://jobvacancy-jsus.onrender.com/AppliedJobs",{
         method:"POST",
         headers:{"content-Type":"application/json"},
         body:JSON.stringify(applicationData)

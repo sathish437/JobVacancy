@@ -85,12 +85,12 @@ function UserLogin() {
     }
 
     useEffect(()=>{
-        fetch("http://localhost:3000/EmployerDetails")
+        fetch("https://jobvacancy-jsus.onrender.com/EmployerDetails")
         .then(res=>res.json())
         .then(data=>setEmpDetails(data))
         .catch(err=>console.log(err));
 
-        fetch("http://localhost:3000/JobSeekerDetails")
+        fetch("https://jobvacancy-jsus.onrender.com/JobSeekerDetails")
         .then(res=>res.json())
         .then(data=>setSeekDetails(data))
         .catch(err=>console.log(err));

@@ -39,7 +39,7 @@ function JobSeekReg(){
   };
 
   useEffect(()=>{
-    fetch("http://localhost:3000/JobSeekerDetails")
+    fetch("https://jobvacancy-jsus.onrender.com/JobSeekerDetails")
     .then(res=>res.json())
     .then(data=>setId((data.length).toString()))
     .catch(err=>console.log(err))
@@ -62,7 +62,7 @@ function JobSeekReg(){
         id:id,
         role:"JobSeeker"
       }
-      fetch(`http://localhost:3000/JobSeekerDetails/${id}`, {
+      fetch(`https://jobvacancy-jsus.onrender.com/JobSeekerDetails/${id}`, {
         method: "PATCH",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(finalData)

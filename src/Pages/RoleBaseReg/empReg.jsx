@@ -10,7 +10,7 @@ function EmpReg() {
     const [check,setCheck]=useState("")
     const navigate=useNavigate()
     useEffect(() => {
-        fetch("http://localhost:3000/EmployerDetails")
+        fetch("https://jobvacancy-jsus.onrender.com/EmployerDetails")
         .then((res)=>res.json())    
         .then((data)=>setId((data.length).toString()))
         .catch((err)=>console.log(err));
@@ -35,7 +35,7 @@ function EmpReg() {
                 id:id,
                 role:"Employer"
             }
-            fetch(`http://localhost:3000/EmployerDetails/${id}`,{
+            fetch(`https://jobvacancy-jsus.onrender.com/EmployerDetails/${id}`,{
                 method:"PATCH",
                 headers:{"Content-Type":"application/json"},   
                 body:JSON.stringify(finalUserData)

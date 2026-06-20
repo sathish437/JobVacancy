@@ -8,12 +8,12 @@ function login(){
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch("http://localhost:3000/EmployerDetails")
+        fetch("https://jobvacancy-jsus.onrender.com/EmployerDetails")
         .then((res)=>res.json())
         .then((data)=>setEmpid(data))
         .catch((err)=>console.log(err));
 
-        fetch("http://localhost:3000/JobSeekerDetails")
+        fetch("https://jobvacancy-jsus.onrender.com/JobSeekerDetails")
         .then((res)=>res.json())
         .then((data)=>setJobid(data))
         .catch((err)=>console.log(err));
@@ -25,7 +25,7 @@ function login(){
                 id:(empid.length+1).toString(),
                 role:userRole
             }
-            fetch("http://localhost:3000/EmployerDetails",{
+            fetch("https://jobvacancy-jsus.onrender.com/EmployerDetails",{
                 method:"POST",
                 headers:{"Content-Type":"application/json"},
                 body:JSON.stringify(res)
@@ -40,7 +40,7 @@ function login(){
                 id:(jobid.length+1).toString(),
                 role:userRole
             }
-            fetch("http://localhost:3000/JobSeekerDetails",{
+            fetch("https://jobvacancy-jsus.onrender.com/JobSeekerDetails",{
                 method:"POST",
                 headers:{"Content-Type":"application/json"},
                 body:JSON.stringify(res)
