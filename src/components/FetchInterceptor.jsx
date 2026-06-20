@@ -1,5 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 
+let globalSetActiveCount = null;
+let globalSetIsSlow = null;
+let globalSetError = null;
+let globalSetHasCompletedFirstFetch = null;
+
 export default function FetchInterceptor({ children }) {
   const [activeCount, setActiveCount] = useState(0);
   const [isSlow, setIsSlow] = useState(false);
@@ -10,20 +15,25 @@ export default function FetchInterceptor({ children }) {
   const slowTimerRef = useRef(null);
 
   useEffect(() => {
+    globalSetActiveCount = setActiveCount;
+    globalSetIsSlow = setIsSlow;
+    globalSetError = setError;
+    globalSetHasCompletedFirstFetch = setHasCompletedFirstFetch;
+
     const originalFetch = window.fetch;
 
     window.fetch = async (...args) => {
       // Increment active request count
       activeCountRef.current += 1;
-      setActiveCount(activeCountRef.current);
+      if (globalSetActiveCount) globalSetActiveCount(activeCountRef.current);
 
       if (activeCountRef.current === 1) {
-        setIsSlow(false);
-        setError(null);
+        if (globalSetIsSlow) globalSetIsSlow(false);
+        if (globalSetError) globalSetError(null);
 
         if (slowTimerRef.current) clearTimeout(slowTimerRef.current);
         slowTimerRef.current = setTimeout(() => {
-          setIsSlow(true);
+          if (globalSetIsSlow) globalSetIsSlow(true);
         }, 1500); // 1.5 seconds threshold for slow responses
       }
 
@@ -35,24 +45,29 @@ export default function FetchInterceptor({ children }) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
-        setHasCompletedFirstFetch(true);
         return response;
       } catch (err) {
         // Avoid setting error for aborted requests if any
         if (err.name !== 'AbortError') {
-          setError(err.message || 'An error occurred while fetching data.');
+          if (globalSetError) {
+            globalSetError(err.message || 'An error occurred while fetching data.');
+          }
         }
         throw err; // Re-throw so original caller handles it
       } finally {
+        if (globalSetHasCompletedFirstFetch) {
+          globalSetHasCompletedFirstFetch(true);
+        }
+
         activeCountRef.current -= 1;
-        setActiveCount(activeCountRef.current);
+        if (globalSetActiveCount) globalSetActiveCount(activeCountRef.current);
 
         if (activeCountRef.current === 0) {
           if (slowTimerRef.current) {
             clearTimeout(slowTimerRef.current);
             slowTimerRef.current = null;
           }
-          setIsSlow(false);
+          if (globalSetIsSlow) globalSetIsSlow(false);
         }
       }
     };
@@ -69,7 +84,7 @@ export default function FetchInterceptor({ children }) {
   };
 
   const handleDismiss = () => {
-    setError(null);
+    if (globalSetError) globalSetError(null);
   };
 
   return (
