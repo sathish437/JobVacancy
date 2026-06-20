@@ -93,7 +93,7 @@ export default function FetchInterceptor({ children }) {
             
             {isSlow && (
               <p className="text-sm text-slate-500 dark:text-slate-400 mt-3 animate-pulse transition-all duration-500">
-                The server may take a moment to start. Please wait.
+                The server may take a moment to start.
               </p>
             )}
           </div>
